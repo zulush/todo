@@ -27,7 +27,7 @@ public class TaskController {
 		TaskController.tasks.add(new Task(3, "établir le Sprint backlog", new Date(), false, "crée par Mohamed Z", new Date()));
 	}
 	
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 	@GetMapping("/personal")
 	public List<Task> personalTask() {
 		
