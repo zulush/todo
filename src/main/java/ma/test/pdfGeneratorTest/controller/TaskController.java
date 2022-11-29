@@ -34,7 +34,7 @@ public class TaskController {
 		return tasks;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 	@PostMapping("/personal")
 	public ResponseEntity<Object> addTask(@RequestBody Task newTask) {
 		
