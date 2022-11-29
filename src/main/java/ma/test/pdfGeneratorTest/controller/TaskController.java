@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ma.test.pdfGeneratorTest.entity.Task;
@@ -36,12 +37,11 @@ public class TaskController {
 	
 	@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 	@PostMapping("/personal")
-	public ResponseEntity<Object> addTask(@RequestBody Task newTask) {
+	public ResponseEntity<Object> addTask(@RequestParam(name ="name") String name, @RequestParam(name="deadline") Date deadline) {
 		
 		try {
-			newTask.setLastUpdateDate(new Date());
+			TaskController.tasks.add(new Task(count++, name, deadline, false, "crée par frontend or mobile Dev", new Date()));
 			
-			tasks.add(newTask);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
