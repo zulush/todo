@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ma.test.pdfGeneratorTest.entity.Task;
 
-@RestController() @RequestMapping("/task")
+@RestController() @RequestMapping("/task") @CrossOrigin(origins = "*")
 public class TaskController {
 
 	static List<Task> tasks = new ArrayList<Task>();
@@ -28,14 +28,14 @@ public class TaskController {
 		TaskController.tasks.add(new Task(3, "établir le Sprint backlog", new Date(), false, "crée par Mohamed Z", new Date()));
 	}
 	
-	@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/personal")
 	public List<Task> personalTask() {
 		
 		return tasks;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/personal")
 	public ResponseEntity<Object> addTask(@RequestParam(name ="name") String name, @RequestParam(name="deadline") Date deadline) {
 		
