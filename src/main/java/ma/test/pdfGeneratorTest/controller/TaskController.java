@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,14 +27,14 @@ public class TaskController {
 		TaskController.tasks.add(new Task(3, "établir le Sprint backlog", new Date(), false, "crée par Mohamed Z", new Date()));
 	}
 	
-	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@GetMapping("/personal")
 	public List<Task> personalTask() {
 		
 		return tasks;
 	}
 	
-	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@PostMapping("/personal")
 	public ResponseEntity<Object> addTask(@RequestBody Task newTask) {
 		
