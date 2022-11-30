@@ -1,9 +1,10 @@
-package ma.test.pdfGeneratorTest.controller;
+package ma.emsi.todo_pfa.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,25 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ma.test.pdfGeneratorTest.entity.Task;
+import ma.emsi.todo_pfa.entity.Task;
+import ma.emsi.todo_pfa.service.TaskService;
 
 @RestController() @RequestMapping("/task") @CrossOrigin(origins = "*")
 public class TaskController {
-
-	static List<Task> tasks = new ArrayList<Task>();
-	static int count = 4;
 	
-	static{
-		TaskController.tasks.add(new Task(1, "établir le Product Backlog", new Date(), false, "crée par Mohamed Z", new Date()));
-		TaskController.tasks.add(new Task(2, "fixer la date du Sprint Planning Meeting", new Date(), false, "crée par Mohamed Z", new Date()));
-		TaskController.tasks.add(new Task(3, "établir le Sprint backlog", new Date(), false, "crée par Mohamed Z", new Date()));
-	}
+	@Autowired
+	TaskService taskSer;
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/personal")
 	public List<Task> personalTask() {
 		
-		return tasks;
+		return taskSer.getAllTasks();
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -40,7 +36,8 @@ public class TaskController {
 	public ResponseEntity<Object> addTask(@RequestParam(name ="name") String name, @RequestParam(name="deadline") Date deadline) {
 		
 		try {
-			TaskController.tasks.add(new Task(count++, name, deadline, false, "crée par frontend or mobile Dev", new Date()));
+			if(taskSer.add(new Task(0, name, deadline, false, "crée par frontend or mobile Dev", new Date()), 0) == null)
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

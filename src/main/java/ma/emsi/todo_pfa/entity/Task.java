@@ -1,4 +1,4 @@
-package ma.test.pdfGeneratorTest.entity;
+package ma.emsi.todo_pfa.entity;
 
 import java.util.Date;
 import java.util.List;
