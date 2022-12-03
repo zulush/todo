@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ma.emsi.todo_pfa.controller.TaskController;
 import ma.emsi.todo_pfa.entity.Task;
-import ma.emsi.todo_pfa.repository.TaskRepository;
 
 public class TaskServiceImpl implements TaskService {
 
