@@ -1,5 +1,6 @@
 package ma.emsi.todo_pfa.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,18 +12,24 @@ import ma.emsi.todo_pfa.repository.TaskRepository;
 
 public class TaskServiceImpl implements TaskService {
 
+	private static List<Task> tasks;
+	private static long cmp = 0;
+	
+	static {
+		tasks = new ArrayList<Task>();
+		tasks.add(new Task(++cmp, "Task created by Backend for testing", new Date(), false, "just created", new Date()));
+	}
 
-	@Autowired
-	private TaskRepository taskRepo;
 
 	@Autowired
 	public List<Task> getAllTasks(){
-		return taskRepo.findAll();
+		return tasks;
 	}
 	
 	@Autowired
 	public Task add(Task task, long userId){
-		return taskRepo.save(task);
+		tasks.add(task);
+		return tasks.get(tasks.size()-1);
 	}
 	
 }
