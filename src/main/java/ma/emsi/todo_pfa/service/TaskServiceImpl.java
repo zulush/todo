@@ -1,13 +1,10 @@
 package ma.emsi.todo_pfa.service;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ma.emsi.todo_pfa.controller.TaskController;
 import ma.emsi.todo_pfa.entity.AppUser;
 import ma.emsi.todo_pfa.entity.Task;
 import ma.emsi.todo_pfa.repository.TaskRepository;
@@ -24,12 +21,12 @@ public class TaskServiceImpl implements TaskService {
 	
 	
 	@Override
-	public List<Task> getUserTasks(long userId){
-		return taskRepo.getTasksByUserId();
+	public List<Task> getUserTasks(int userId){
+		return taskRepo.getTasksByUserId(userId);
 	}
 	
-	@Autowired
-	public Task add(Task task, long userId){
+	@Override
+	public Task add(Task task, int userId){
 		AppUser user = userRepo.findById(userId).get();
 		
 		if(user == null)

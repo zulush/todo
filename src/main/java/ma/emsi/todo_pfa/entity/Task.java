@@ -18,13 +18,11 @@ public class Task {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long taskId;
+	private int taskId;
 	private String name;
 	private Date deadline;
 	private boolean done;
 	private String lastUpdateDesc;
 	private Date lastUpdateDate;
-	@ManyToMany(mappedBy = "user_task")
-	private List<AppUser> users;
 	
 }

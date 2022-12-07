@@ -20,14 +20,14 @@ import lombok.NoArgsConstructor;
 public class AppUser {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private long user_id;
+	private int user_id;
 	private String username;
 	private String password;
 	@ManyToMany
 	@JoinTable(
 			  name = "user_task", 
-			  joinColumns = @JoinColumn(name = "user_id"), 
-			  inverseJoinColumns = @JoinColumn(name = "task_id"))
+			  joinColumns = @JoinColumn(name = "task_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<Task> tasks;
 	
 	

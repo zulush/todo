@@ -24,7 +24,7 @@ public class TaskController {
 	@Autowired
 	TaskService taskSer;
 	
-	public long getCurrentUserId() {
+	public int getCurrentUserId() {
 		return 1;
 	}
 	
