@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,11 +18,13 @@ public class Task {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private long taskId;
 	private String name;
 	private Date deadline;
 	private boolean done;
 	private String lastUpdateDesc;
 	private Date lastUpdateDate;
+	@ManyToMany(mappedBy = "user_task")
+	private List<AppUser> users;
 	
 }

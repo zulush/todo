@@ -24,11 +24,15 @@ public class TaskController {
 	@Autowired
 	TaskService taskSer;
 	
+	public long getCurrentUserId() {
+		return 1;
+	}
+	
+	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/personal")
 	public List<Task> personalTask() {
-		
-		return taskSer.getAllTasks();
+		return taskSer.getUserTasks(getCurrentUserId());
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -36,7 +40,7 @@ public class TaskController {
 	public ResponseEntity<Object> addTask(@RequestParam(name ="name") String name, @RequestParam(name="deadline") Date deadline) {
 		
 		try {
-			if(taskSer.add(new Task(0, name, deadline, false, "crée par frontend or mobile Dev", new Date()), 0) == null)
+			if(taskSer.add(new Task(0, name, deadline, false, "crée", new Date()), getCurrentUserId()) == null)
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		} catch (Exception e) {
