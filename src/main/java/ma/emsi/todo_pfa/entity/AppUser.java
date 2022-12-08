@@ -26,8 +26,8 @@ public class AppUser {
 	@ManyToMany
 	@JoinTable(
 			  name = "user_task", 
-			  joinColumns = @JoinColumn(name = "task_id"), 
-			  inverseJoinColumns = @JoinColumn(name = "user_id"))
+			  joinColumns = @JoinColumn(name = "user_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "task_id"))
 	private List<Task> tasks;
 	
 	
