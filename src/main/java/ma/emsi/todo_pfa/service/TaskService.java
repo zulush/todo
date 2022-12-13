@@ -8,7 +8,7 @@ import ma.emsi.todo_pfa.entity.Task;
 
 public interface TaskService {
 
-	Task add(Task task, int userid);
+	boolean add(Task task, int userid);
 
 	List<Task> getUserTasks(int userId);
 

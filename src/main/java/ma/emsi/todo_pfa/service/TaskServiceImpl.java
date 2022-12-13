@@ -26,21 +26,21 @@ public class TaskServiceImpl implements TaskService {
 	}
 	
 	@Override
-	public Task add(Task task, int userId){
+	public boolean add(Task task, int userId){
 		AppUser user = userRepo.findById(userId).get();
 		
 		if(user == null)
-			return null;
+			return false;
 		
 		Task newTask = taskRepo.save(task);
 		
 		if(newTask == null)
-			return null;
+			return false;
 		
 		user.addTask(newTask);
 		userRepo.save(user);
 		
-		return newTask;
+		return true;
 	}
 	
 }

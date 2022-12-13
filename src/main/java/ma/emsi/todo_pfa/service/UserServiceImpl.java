@@ -49,4 +49,12 @@ public class UserServiceImpl implements UserService{
 		return true;
 	}
 
+	@Override
+	public AppUser getUser(int user_id) {
+		if(userRepo.findById(user_id).isPresent())
+			return userRepo.findById(user_id).get();
+
+		return null;
+	}
+
 }

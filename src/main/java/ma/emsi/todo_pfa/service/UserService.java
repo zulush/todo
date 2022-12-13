@@ -9,4 +9,6 @@ public interface UserService {
 
 	boolean addTaskToUser(int task_id, int user_id);
 
+	AppUser getUser(int i);
+
 }
