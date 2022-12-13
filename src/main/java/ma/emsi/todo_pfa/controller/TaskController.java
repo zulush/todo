@@ -46,7 +46,7 @@ public class TaskController {
 		if(taskSer.add(new Task(0, name, deadline, false, "crée", new Date()), getCurrentUser().getUser_id()))
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 			
-		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -56,7 +56,23 @@ public class TaskController {
 		if(taskSer.add(new Task(0, name, deadline, false, "crée par " + getCurrentUser().getUsername(), new Date()), user_id))
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	
-		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@PostMapping("/done")
+	public ResponseEntity<Object> isTaskDone(@RequestParam(name ="task_id") int task_id, @RequestParam(name ="done") boolean done){
+		
+		for(Task task: getCurrentUser().getTasks()) {
+			if(task.getTaskId() == task_id) {
+				if(taskSer.isDone(task_id, done, getCurrentUser().getUsername()))
+					return new ResponseEntity<>(HttpStatus.ACCEPTED);
+				else
+					return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+			}
+		}
+		
+		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 	}
 	
 }

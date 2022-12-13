@@ -12,4 +12,7 @@ public interface TaskService {
 
 	List<Task> getUserTasks(int userId);
 
+	boolean isDone(int task_id, boolean done, String username);
+
+
 }
