@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
 		AppUser user = userRepo.getByUsername(username);
 		
 		if (user != null) {
-			UserModel userModel = new UserModel(user.getUser_id(), user.getUsername());
+			UserModel userModel = new UserModel(user.getUserId(), user.getUsername());
 			return userModel;
 		}
 		

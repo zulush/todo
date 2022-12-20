@@ -36,14 +36,14 @@ public class TaskController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/personal")
 	public List<Task> personalTask() {
-		return taskSer.getUserTasks(getCurrentUser().getUser_id());
+		return taskSer.getUserTasks(getCurrentUser().getUserId());
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/personal")
 	public ResponseEntity<Object> addTask(@RequestParam(name ="name") String name, @RequestParam(name="deadline") Date deadline) {
 		
-		if(taskSer.add(new Task(0, name, deadline, false, "crée", new Date()), getCurrentUser().getUser_id()))
+		if(taskSer.add(new Task(0, name, deadline, false, "crée", new Date()), getCurrentUser().getUserId()))
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 			
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);

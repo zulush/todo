@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class AppUser {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private int user_id;
+	private int userId;
 	private String username;
 	private String password;
 	@ManyToMany
