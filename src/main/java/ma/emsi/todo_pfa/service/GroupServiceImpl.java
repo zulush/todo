@@ -39,6 +39,7 @@ public class GroupServiceImpl implements GroupService {
 		}
 		
 		Group newGroup = new Group();
+		newGroup.setName(name);
 		groupRepo.save(newGroup);
 		
 		
@@ -47,6 +48,26 @@ public class GroupServiceImpl implements GroupService {
 		newGroup.setMembers(users);
 		
 		return groupRepo.save(newGroup) != null;
+	}
+
+
+	@Override
+	public List<Group> getUserGroupes(int userId) {
+		
+		List<Group> groups = new ArrayList<Group>();
+		
+		for(Group g: groupRepo.findAll()) {
+			if(g.getAdmin().getUserId() == userId)
+				groups.add(g);
+			else {
+				for(AppUser u: g.getMembers()) {
+					if(u.getUserId() == userId)
+						groups.add(g);
+				}
+			}
+		}
+		
+		return groups;
 	}
 
 }

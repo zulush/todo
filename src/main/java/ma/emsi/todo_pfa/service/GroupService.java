@@ -10,4 +10,6 @@ import ma.emsi.todo_pfa.entity.Group;
 public interface GroupService {
 
 	boolean create(String name, int adminId, List<Integer> usersIds);
+
+	List<Group> getUserGroupes(int userId);
 }

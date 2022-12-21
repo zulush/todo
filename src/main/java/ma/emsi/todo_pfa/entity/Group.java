@@ -21,6 +21,7 @@ public class Group {
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int groupId;
+	private String name;
 	@ManyToOne
 	private AppUser admin;
 	@ManyToMany
