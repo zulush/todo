@@ -1,5 +1,6 @@
 package ma.emsi.todo_pfa.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,5 +27,14 @@ public class Group {
 	private AppUser admin;
 	@ManyToMany
 	private List<AppUser> members;
+	@ManyToMany
+	private List<Task> tasks;
+	
+	public void add(Task task) {
+		if(tasks == null)
+			tasks = new ArrayList<Task>();
+		
+		tasks.add(task);
+	}
 	
 }

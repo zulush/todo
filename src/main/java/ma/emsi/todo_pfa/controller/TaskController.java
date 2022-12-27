@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ma.emsi.todo_pfa.entity.AppUser;
 import ma.emsi.todo_pfa.entity.Task;
+import ma.emsi.todo_pfa.model.TasksListModel;
 import ma.emsi.todo_pfa.service.TaskService;
 import ma.emsi.todo_pfa.service.UserService;
 
@@ -73,6 +74,12 @@ public class TaskController {
 		}
 		
 		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@GetMapping("/all")
+	public TasksListModel getUndoneTasks() {
+		return taskSer.getUndoneTasks(getCurrentUser().getUserId());
 	}
 	
 }

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import ma.emsi.todo_pfa.entity.AppUser;
 import ma.emsi.todo_pfa.entity.Group;
+import ma.emsi.todo_pfa.entity.Task;
 import ma.emsi.todo_pfa.repository.GroupRepository;
+import ma.emsi.todo_pfa.repository.TaskRepository;
 import ma.emsi.todo_pfa.repository.UserRepository;
 
 @Service
@@ -18,6 +20,8 @@ public class GroupServiceImpl implements GroupService {
 	GroupRepository groupRepo;
 	@Autowired
 	UserRepository userRepo;
+	@Autowired
+	TaskRepository taskRepo;
 	
 	
 	@Override
@@ -68,6 +72,33 @@ public class GroupServiceImpl implements GroupService {
 		}
 		
 		return groups;
+	}
+
+
+	@Override
+	public Task affectTaskToGroup(int taskId, int groupId, int userId) {
+		
+		Group group = null;
+		
+		for(Group g: this.getUserGroupes(userId)) {
+			if(groupId == g.getGroupId())
+				group = g;
+		}
+		
+		if(group == null)
+			return null;
+		
+		Task task;
+		if(taskRepo.findById(taskId).isEmpty())
+			return null;
+		else
+			task = taskRepo.findById(taskId).get();
+		
+		group.add(task);
+		
+		groupRepo.save(group);
+		
+		return task;
 	}
 
 }

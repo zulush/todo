@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ma.emsi.todo_pfa.entity.AppUser;
 import ma.emsi.todo_pfa.entity.Group;
+import ma.emsi.todo_pfa.entity.Task;
 import ma.emsi.todo_pfa.model.GroupModel;
 import ma.emsi.todo_pfa.service.GroupService;
 import ma.emsi.todo_pfa.service.UserService;
@@ -54,6 +55,18 @@ public class GroupController {
 		
 		if(!groups.isEmpty())
 			return ResponseEntity.ok(groups);
+	
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@PostMapping("/task")
+	public ResponseEntity<Task> AffectTaskToGroups(@RequestParam(name ="task_id") int taskId, @RequestParam(name ="group_id") int groupId){
+		
+		Task task = groupSer.affectTaskToGroup(taskId, groupId, this.getCurrentUser().getUserId());
+		
+		if(task != null)
+			return ResponseEntity.ok(task);
 	
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}

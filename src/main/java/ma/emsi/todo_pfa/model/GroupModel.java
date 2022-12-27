@@ -1,11 +1,14 @@
 package ma.emsi.todo_pfa.model;
 
+import java.util.List;
+
 import ma.emsi.todo_pfa.entity.Group;
 
 public class GroupModel {
 	
 	private int id;
 	private String name;
+	private List<TaskModel> tasks;
 	
 	public GroupModel(Group data){
 		this.id = data.getGroupId();

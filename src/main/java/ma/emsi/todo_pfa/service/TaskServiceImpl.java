@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ma.emsi.todo_pfa.entity.AppUser;
+import ma.emsi.todo_pfa.entity.Group;
 import ma.emsi.todo_pfa.entity.Task;
+import ma.emsi.todo_pfa.model.TasksListModel;
 import ma.emsi.todo_pfa.repository.TaskRepository;
 import ma.emsi.todo_pfa.repository.UserRepository;
 
@@ -18,7 +20,8 @@ public class TaskServiceImpl implements TaskService {
 	TaskRepository taskRepo;
 	@Autowired
 	UserRepository userRepo;
-	
+	@Autowired
+	GroupService groupSer;
 	
 	
 	@Override
@@ -65,6 +68,43 @@ public class TaskServiceImpl implements TaskService {
 		taskRepo.save(task);
 		
 		return true;
+	}
+
+	@Override
+	public TasksListModel getUndoneTasks(int userId) {
+		
+		TasksListModel undoTasks = new TasksListModel();
+		
+		for(Group g : groupSer.getUserGroupes(userId)) {
+			for(Task t: g.getTasks()) {
+				if(!t.isDone())
+					undoTasks.addGroupTask(t, g.getName());
+			}
+		}
+		
+		for(Task t: getUserTasks(userId)) {
+			if(!t.isDone()) {
+				if(this.sharedWith(userId, t.getTaskId()).isEmpty()) {
+					undoTasks.addPersonalTasks(t);
+				} else {
+					undoTasks.addSharedTasks(t, this.sharedWith(userId, t.getTaskId()));
+				}
+			}
+		}
+		
+		
+		
+		return undoTasks;
+	}
+
+	private String sharedWith(int userId, int taskId) {
+		
+		String names = "";
+		for(String name: taskRepo.getUsernameByTask(userId,taskId)) {
+			names += name + "; ";
+		}
+		
+		return names;
 	}
 	
 }
